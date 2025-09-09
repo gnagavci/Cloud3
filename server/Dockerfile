@@ -1,5 +1,8 @@
 FROM node:18-alpine
 
+# Install build dependencies for native modules
+RUN apk add --no-cache python3 make g++
+
 # Set working directory
 WORKDIR /app
 
@@ -9,7 +12,7 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy source code
+# Copy source code (excluding node_modules)
 COPY . .
 
 # Expose port
