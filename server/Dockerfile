@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
-# Install build dependencies for native modules
-RUN apk add --no-cache python3 make g++
+# Install build dependencies for native modules and wget for healthcheck
+RUN apk add --no-cache python3 make g++ wget
 
 # Set working directory
 WORKDIR /app
@@ -9,8 +9,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies and rebuild native modules for Alpine
+RUN npm install && npm rebuild sqlite3
 
 # Copy source code (excluding node_modules)
 COPY . .
