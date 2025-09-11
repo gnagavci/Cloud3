@@ -65,27 +65,20 @@ services:
     networks:
       - test-network
 
-  # E2E tests with Playwright - UPDATED VERSION
+  # E2E tests with Playwright
   test-e2e:
-    image: mcr.microsoft.com/playwright:v1.48.0-focal
+    build:
+      context: ./e2e
+      dockerfile: Dockerfile.e2e
     container_name: movie-app-test-e2e
-    volumes:
-      - ./e2e:/app/e2e
-    working_dir: /app
     environment:
       - CI=true
+      - FRONTEND_BASE_URL=http://frontend:5173
     depends_on:
       frontend:
         condition: service_healthy
       backend-test:
         condition: service_healthy
-    command: >
-      sh -c "
-        cd /app/e2e &&
-        npm init -y &&
-        npm install --save-dev @playwright/test@1.48.0 &&
-        npx playwright test --config=playwright.config.js || exit 0
-      "
     networks:
       - test-network
 

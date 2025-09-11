@@ -32,14 +32,23 @@ app.use(express.json());
 // Initialize database
 initDatabase();
 
+// Health check endpoint (before other routes)
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'healthy', 
+    timestamp: new Date().toISOString(),
+    service: 'movie-app-backend',
+    version: '1.0.0'
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Routes
 app.use('/api/movies', moviesRouter);
 app.use('/api/metrics', metricsRouter);
-
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
 
 // Error handling
 app.use((err, req, res, next) => {
