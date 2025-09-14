@@ -9,11 +9,15 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies and rebuild native modules for Alpine
-RUN npm install && npm rebuild sqlite3
+# Install dependencies
+RUN npm install
 
 # Copy source code (excluding node_modules)
 COPY . .
+
+# Rebuild native modules for the container architecture after source is copied
+# This ensures sqlite3 is built for the correct architecture even with volume mounts
+RUN npm rebuild sqlite3
 
 # Expose port
 EXPOSE 3001
