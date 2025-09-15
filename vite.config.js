@@ -10,6 +10,7 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     cors: true,
+    allowedHosts: ['frontend', 'localhost'],  // Allow Docker service name and localhost
     hmr: {
       host: 'localhost'
     }

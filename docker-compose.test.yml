@@ -74,6 +74,7 @@ services:
     environment:
       - CI=true
       - FRONTEND_BASE_URL=http://frontend:5173
+      - BACKEND_URL=http://backend-test:3001
     depends_on:
       frontend:
         condition: service_healthy

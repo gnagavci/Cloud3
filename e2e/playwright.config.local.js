@@ -1,21 +1,20 @@
+// Local development configuration for Playwright tests
 module.exports = {
   testDir: '.',
-  timeout: 90000, // Increased timeout
-  retries: 3, // More retries for flaky tests
+  timeout: 90000,
+  retries: 2,
   workers: 1,
   reporter: [
     ['list'],
-    ['html', { outputFolder: '/app/playwright-report', open: 'never' }],
-    ['junit', { outputFile: '/app/test-results/results.xml' }]
+    ['html', { outputFolder: 'test-results/e2e', open: 'never' }],
+    ['junit', { outputFile: 'test-results/e2e/results.xml' }]
   ],
   use: {
-    // Don't set baseURL here - let tests handle URLs dynamically
+    // Local URLs for development testing
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    // Longer navigation timeout
     navigationTimeout: 60000,
-    // Longer action timeout
     actionTimeout: 30000,
   },
   projects: [
